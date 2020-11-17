@@ -1,5 +1,6 @@
 const readline = require('readline');
-
+const data = require('./data.js')
+const todos = data.todos
 
 const interface = readline.createInterface({
   input: process.stdin,
@@ -18,16 +19,53 @@ Your options are:
 
 `;
 
-const handleMenu = function(cmd) {
-  if (cmd === '6') {
-    console.log('Quitting!')
-    interface.close();
-  } else {
-    console.clear();
-    console.log('Type 6 to quit!');
-    interface.question(menu, handleMenu);
+const add = (userInput) => {
+  const obj = {}
+  obj.text = userInput;
+  obj.isComplete = false;
+  obj.priority = 2;
+  todos.push(obj)
+  console.clear()
+  for (todo of todos) {
+    console.log(`* ${todo.text}`)
   }
-};
+  interface.question(menu, select)
+}
+
+const select = (userInput) => {
+  switch (userInput) {
+    case '1':
+      console.clear()
+      interface.question(`What should go on your todo list:?\n`, add)
+      break;
+    case '2':
+      console.log(`This feature is under construction. Check back later!`)
+      interface.question(menu, select)
+      break;
+    case '3':
+      console.log(`This feature is under construction. Check back later!`)
+      interface.question(menu, select)
+      break;
+    case '4':
+      console.log(`This feature is under construction. Check back later!`)
+      interface.question(menu, select)
+      break;
+    case '5':
+      console.log(`This feature is under construction. Check back later!`)
+      interface.question(menu, select)
+      break;
+    case '6':
+      console.log(`Quitting!`)
+      interface.close()
+      break;
+  }
+
+}
 
 console.clear();
-interface.question(menu, handleMenu);
+console.log(`Here are your todo's!`)
+for (const todo of todos) {
+  console.log(`* ${todo.text}`)
+}
+
+interface.question(menu, select);
